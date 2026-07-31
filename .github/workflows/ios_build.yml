@@ -3,7 +3,7 @@ name: Build and Upload iOS App
 on:
   push:
     branches:
-      - main  # نام شاخه اصلی کد شما (اگر master است، تغییر دهید)
+      - main
 
 jobs:
   build-ios:
@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ۲. نصب جاوا (برای نیازهای ابزاری)
+      # ۲. نصب جاوا
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # ۵. نصب Certificate در Keychain لینوکس/مک گیت‌هاب
+      # ۵. نصب Certificate در Keychain
       - name: Install Certificate
         uses: apple-actions/import-codesign-certs@v3
         with:
@@ -51,14 +51,13 @@ jobs:
 
       # ۷. ساخت فایل IPA
       - name: Build IPA
-        run: |
-          flutter build ipa --release --no-codesign
-          
-      # ۸. امضا و آپلود نسخه به TestFlight / App Store Connect
+        run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
+
+      # ۸. آپلود نسخه به TestFlight / App Store Connect
       - name: Upload App to TestFlight
-        uses: apple-actions/upload-appstore-build@v2
+        uses: apple-actions/upload-testflight-build@v1
         with:
-          app-path: 'build/ios/archive/Runner.xcarchive'
+          app-path: 'build/ios/ipa/*.ipa'
           issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           api-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          api-key-secret: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY_BASE64 }}
+          api-private-key: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY_BASE64 }}
