@@ -49,9 +49,14 @@ jobs:
           api-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           api-private-key: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY_BASE64 }}
 
-      # ۷. ساخت فایل IPA
-      - name: Build IPA
-        run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
+      # ۷. ساخت و امضای فایل IPA
+      - name: Build and Sign IPA
+        run: |
+          flutter build ipa --release --no-codesign
+          xcodebuild -exportArchive \
+            -archivePath build/ios/archive/Runner.xcarchive \
+            -exportPath build/ios/ipa \
+            -exportOptionsPlist ios/Runner/ExportOptions.plist
 
       # ۸. آپلود نسخه به TestFlight / App Store Connect
       - name: Upload App to TestFlight
