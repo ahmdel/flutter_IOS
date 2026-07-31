@@ -39,7 +39,7 @@ jobs:
           p12-file-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           p12-password: ${{ secrets.P12_PASSWORD }}
 
-      # ۶. نصب Provisioning Profile
+     # ۶. نصب Provisioning Profile
       - name: Install Provisioning Profile
         uses: apple-actions/download-provisioning-profiles@v3
         with:
@@ -47,7 +47,7 @@ jobs:
           profile-type: 'IOS_APP_STORE'
           issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           api-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          api-key-secret: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY_BASE64 }}
+          api-private-key: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY_BASE64 }}
 
       # ۷. ساخت فایل IPA
       - name: Build IPA
