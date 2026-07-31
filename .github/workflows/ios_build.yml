@@ -28,6 +28,10 @@ jobs:
           channel: 'stable'
           architecture: x64
 
+      # غیرفعال‌سازی Swift Package Manager برای حل تداخل پکیج‌ها با CocoaPods
+      - name: Disable Swift Package Manager
+        run: flutter config --no-enable-swift-package-manager
+
       # ۴. دریافت پکیج‌های فلاتر
       - name: Install dependencies
         run: flutter pub get
@@ -39,7 +43,7 @@ jobs:
           p12-file-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           p12-password: ${{ secrets.P12_PASSWORD }}
 
-     # ۶. نصب Provisioning Profile
+      # ۶. نصب Provisioning Profile
       - name: Install Provisioning Profile
         uses: apple-actions/download-provisioning-profiles@v3
         with:
