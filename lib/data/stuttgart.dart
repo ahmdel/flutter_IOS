@@ -1,0 +1,14 @@
+import '../models.dart';
+
+// @formatter:off
+final List<Restaurant> STUTTGART_RESTAURANTS = [
+  Restaurant(name: "رستوران بابونه", name_map: "Babune, das Persische Restaurant", lat: 48.77242837056159, lon: 9.142648578793107, description: "مکانی دنج و عالی برای خانواده‌ها با غذاهای اصیل ایرانی و اتمسفری صمیمی", parkingInfo: "پارکینگ خیابانی", city: "Stuttgart", price: "€20–30", rating: "4.7 (170)", workingHours: "10 pm"),
+  Restaurant(name: "رستوران نیروان", name_map: "Nirvan - Das persische Restaurant", lat: 48.773097912683724, lon: 9.175222282498787, description: "ظرافت‌های آشپزی ایرانی در محیطی گرم با سرویس‌دهی عالی و حرفه‌ای", parkingInfo: "پارکینگ عمومی", city: "Stuttgart", price: "€20–30", rating: "4.5 (854)", workingHours: "11 pm"),
+  Restaurant(name: "رستوران دربند", name_map: "Darband Restaurant", lat: 48.819242931774056, lon: 9.17771625734856, description: "غذاهای شگفت‌انگیز در محیطی با حال و هوای نوستالژیک ایران قدیم", parkingInfo: "پارکینگ اختصاصی", city: "Stuttgart", price: "€20–30", rating: "4.6 (216)", workingHours: "11 pm"),
+  Restaurant(name: "رستوران زرتشت", name_map: "Zartosht Restaurant Stuttgart", lat: 48.77975444659982, lon: 9.224388870842136, description: "تجربه‌ای از طعم و اتمسفر واقعی ایران در قلب اشتوتگارت با کباب‌های عالی", parkingInfo: "پارکینگ در محل", city: "Stuttgart", price: "€20–30", rating: "4.5 (145)", workingHours: "9 pm"),
+  Restaurant(name: "رستوران رامان", name_map: "Raman Restaurant", lat: 48.773488612625286, lon: 9.186699123603221, description: "غذاهای لذیذ ایرانی با قیمت‌های بسیار منصفانه و مناسب در محیطی دوستانه", parkingInfo: "پارکینگ عمومی", city: "Stuttgart", price: "€10–20", rating: "4.6 (4,358)", workingHours: "12 am"),
+  Restaurant(name: "رستوران کاسپین", name_map: "Caspian Restaurant", lat: 48.63948346902189, lon: 8.908286242774253, description: "غذاهای تازه، نرم و خاطره‌انگیز که حتماً در منطقه بو بلینگن باید امتحان کرد", parkingInfo: "پارکینگ اختصاصی", city: "Böblingen (Stuttgart Area)", price: "€20–30", rating: "4.7 (485)", workingHours: "9 pm"),
+  Restaurant(name: "رستوران زعفران", name_map: "Safran Restaurant Stuttgart", lat: 48.77717928641296, lon: 9.165473011946569, description: "غذای اصیل و خوش‌طعم در محیطی آرام با پرسنل آگاه و مهربان", parkingInfo: "پارکینگ عمومی", city: "Stuttgart", price: "€20–30", rating: "4.3 (920)", workingHours: "2 pm"),
+  Restaurant(name: "پرسپولیس", name_map: "Persepolis", lat: 48.79713706737493, lon: 9.006006735259872, description: "تخصص در ارائه غذاهای گرم و لذیذ سنتی به صورت سریع و باکیفیت", parkingInfo: "پارکینگ خیابانی", city: "Stuttgart", price: "€10–20", rating: "4.6 (65)", workingHours: "8 am"),
+];
+// @formatter:on

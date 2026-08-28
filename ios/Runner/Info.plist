@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleDisplayName</key>
+    <string>Restaurant Finder App</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>restaurant_finder_app</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>$(FLUTTER_BUILD_NAME)</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>$(FLUTTER_BUILD_NUMBER)</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>برای پیدا کردن رستوران‌های نزدیک و برنامه‌ریزی سفر، به موقعیت مکانی شما نیاز داریم.</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>برای نمایش رستوران‌ها و محاسبه فاصله روی نقشه به دسترسی موقعیت مکانی نیاز است.</string>
+
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
+    
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+    <key>UIMainStoryboardFile</key>
+    <string>Main</string>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
+    <key>UIApplicationSupportsIndirectInputEvents</key>
+    <true/>
+<!-- ۱. شناسه دقیق AdMob شما استخراج شده از فایل مانیفست -->
+    <key>GADApplicationIdentifier</key>
+    <string>ca-app-pub-1909436077319120~5303959800</string>
+
+    <!-- ۲. دسترسی‌های موقعیت مکانی برای پکیج geolocator -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>این اپلیکیشن برای پیدا کردن و نمایش رستوران‌های اطراف، به موقعیت مکانی شما نیاز دارد.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>این اپلیکیشن برای پیدا کردن و نمایش رستوران‌های اطراف، به موقعیت مکانی شما نیاز دارد.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>این اپلیکیشن برای پیدا کردن و نمایش رستوران‌های اطراف، به موقعیت مکانی شما نیاز دارد.</string>
+
+    <!-- ۳. مجوز باز کردن لینک‌ها و ایمیل برای پکیج url_launcher -->
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>mailto</string>
+        <string>http</string>
+        <string>https</string>
+        <string>maps</string>
+        <string>comgooglemaps</string>
+    </array>
+
+    <!-- ۴. رفع هشدار Missing Compliance در TestFlight -->
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
+</dict>
+</plist>

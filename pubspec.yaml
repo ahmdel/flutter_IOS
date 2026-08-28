@@ -1,0 +1,58 @@
+name: restaurant_finder_app
+description: "A new Flutter project."
+
+publish_to: 'none'
+
+
+version: 1.0.2+18
+
+environment:
+
+  sdk: ^3.10.1
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  in_app_update: ^4.1.0
+  flutter_secure_storage: ^9.0.0
+  shared_preferences: ^2.2.3
+  firebase_core: ^2.32.0
+  cloud_firestore: ^4.17.5
+
+  cupertino_icons: ^1.0.2
+  #flutter_stripe: ^10.1.1
+
+  # پکیج های ضروری برای پروژه شما
+  http: ^1.2.1               # برای دریافت اطلاعات آب و هوا/API
+  geolocator: ^12.0.0        # برای دریافت موقعیت مکانی کاربر (نسخه کمی جدیدتر)
+  url_launcher: ^6.3.0       # برای باز کردن لینک گوگل مپ (نسخهpub کمی جدیدتر)
+  another_flushbar: ^1.12.30
+  flutter_ringtone_player: ^4.0.0
+  device_info_plus: ^12.3.0
+  in_app_purchase: ^3.2.3
+  google_mobile_ads: ^5.2.0
+  
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # نسخه معمولاً به‌روزتر
+  flutter_lints: ^6.0.0 
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/res_finder.png"
+  min_sdk_android: 21 # اضافه کردن این خط برای پشتیبانی از آیکون‌های تطبیقی
+  adaptive_icon_background: "#FFFFFF" # رنگ پس‌زمینه (مثلاً سفید)
+  adaptive_icon_foreground: "assets/res_finder.png"
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/res_finder.png

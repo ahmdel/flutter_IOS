@@ -1,0 +1,95 @@
+name: Build and Upload iOS App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+      # ۱. دریافت کدها از GitHub
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false # <--- تغییر اول: جلوگیری از ارسال توکن گیت‌هاب اکشنز به CocoaPods
+
+      # ۲. نصب جاوا
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # ۳. نصب فلاتر
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: x64
+
+      # غیرفعال‌سازی SPM برای جلوگیری از تداخل با CocoaPods
+      - name: Disable Swift Package Manager
+        run: flutter config --no-enable-swift-package-manager
+
+      # ۴. دریافت پکیج‌های فلاتر
+      - name: Install dependencies
+        run: flutter pub get
+
+      # ۵. نصب Certificate در Keychain
+      - name: Install Certificate
+        uses: apple-actions/import-codesign-certs@v3
+        with:
+          p12-file-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          p12-password: ${{ secrets.P12_PASSWORD }}
+
+     # ۶. نصب Provisioning Profile
+      - name: Install Provisioning Profile
+        uses: apple-actions/download-provisioning-profiles@v3
+        with:
+          bundle-id: 'com.smartsoftware.persianrestaurantfinder'
+          profile-type: 'IOS_APP_STORE'
+          issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          api-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          api-private-key: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY_BASE64 }}
+
+      # ۶.۵. پاک‌سازی کَش و پدهای قدیمی (برای اعمال تغییرات جدید Podfile)
+      - name: Clean Old Pods and Cache
+        run: |
+          flutter clean
+          rm -rf ios/Pods ios/Podfile.lock
+
+      # تغییر دوم: پاکسازی هدر احراز هویت گیت بلافاصله قبل از بیلد برای اطمینان ۱۰۰ درصدی
+      - name: Fix CocoaPods 403 Error
+        run: git config --global --unset-all http.https://github.com/.extraheader || true
+
+      # ۷. ساخت و امضای فایل IPA
+      - name: Build and Sign IPA
+        run: |
+          flutter build ipa --release --no-codesign --build-number=$(( ${{ github.run_number }} + 15 ))
+          xcodebuild -exportArchive \
+            -archivePath build/ios/archive/Runner.xcarchive \
+            -exportPath build/ios/ipa \
+            -exportOptionsPlist ios/Runner/ExportOptions.plist
+
+      # ۷.۵. پیدا کردن مسیر دقیق فایل IPA
+      - name: Find IPA File Path
+        run: echo "IPA_PATH=$(find build/ios/ipa -name '*.ipa' | head -n 1)" >> $GITHUB_ENV
+
+      # ۷.۶. آپلود فایل IPA به عنوان Artifact (جهت دانلود مستقیم از وب‌سایت گیت‌هاب)
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build-ipa
+          path: ${{ env.IPA_PATH }}
+
+      # ۸. آپلود نسخه به TestFlight / App Store Connect
+      - name: Upload App to TestFlight
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: ${{ env.IPA_PATH }}
+          issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          api-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          api-private-key: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY_BASE64 }}

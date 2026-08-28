@@ -1,0 +1,61 @@
+// berlin_pois.json
+// دیدنی‌های برلین
+
+[
+    {
+        "name": "Brandenburg Gate (دروازه براندنبورگ)",
+        "name_map": "Brandenburg Gate",
+        "lat": 52.5163, "lon": 13.3777,
+        "rating": 4.8,
+        "description": "نماد اتحاد آلمان و یکی از مشهورترین بناهای اروپا.",
+        "duration": "۰.۵ تا ۱ ساعت",
+        "best_season": "تمام فصول",
+        "suitable_age": "همه گروه‌های سنی",
+        "unsuitable_age": "ندارد",
+        "opening_hours": "24 ساعته",
+        "ticket_price": "رایگان",
+        "ticket_link": "ندارد"
+    },
+    {
+        "name": "Reichstag Building (ساختمان رایشتاگ)",
+        "name_map": "BReichstag Building",
+        "lat": 52.5186, "lon": 13.3762,
+        "rating": 4.7,
+        "description": "مقر پارلمان آلمان، با گنبد شیشه‌ای معروف و منظره شهر.",
+        "duration": "۱ تا ۲ ساعت",
+        "best_season": "تمام فصول (نیاز به رزرو قبلی)",
+        "suitable_age": "بزرگسالان و نوجوانان",
+        "unsuitable_age": "ندارد",
+        "opening_hours": "همه روزه: 08:00 تا 24:00 (آخرین ورود 21:45)",
+        "ticket_price": "رایگان (با رزرو اجباری)",
+        "ticket_link": "https://www.bundestag.de/en/visiting/registration"
+    },
+    {
+        "name": "East Side Gallery (گالری ایست ساید)",
+        "name_map": "BEast Side Gallery",
+        "lat": 52.5032, "lon": 13.4449,
+        "rating": 4.5,
+        "description": "بزرگترین بخش باقیمانده از دیوار برلین که اکنون یک گالری هنری در فضای باز است.",
+        "duration": "۱ تا ۲ ساعت",
+        "best_season": "بهار، تابستان، پاییز",
+        "suitable_age": "همه گروه‌های سنی",
+        "unsuitable_age": "ندارد",
+        "opening_hours": "24 ساعته",
+        "ticket_price": "رایگان",
+        "ticket_link": "ندارد"
+    },
+    {
+        "name": "Museum Island (جزیره موزه‌ها)",
+        "name_map": "Museum Island",
+        "lat": 52.5222, "lon": 13.3986,
+        "rating": 4.7,
+        "description": "مجموعه‌ای از پنج موزه با شهرت جهانی (شامل پرگامون، موزه جدید و...)",
+        "duration": "۴ تا ۶ ساعت (برای ۲-۳ موزه)",
+        "best_season": "تمام فصول",
+        "suitable_age": "بزرگسالان و نوجوانان",
+        "unsuitable_age": "کودکان خردسال (بازدید خسته‌کننده)",
+        "opening_hours": "سه‌شنبه تا یکشنبه: 10:00 تا 18:00 (دوشنبه‌ها تعطیل)",
+        "ticket_price": "€ 19 (کارت روزانه جزیره موزه‌ها)",
+        "ticket_link": "https://www.smb.museum/en/plan-your-visit/tickets/"
+    }
+]

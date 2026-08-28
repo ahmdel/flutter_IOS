@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "191349063904",
+    "project_id": "mobileappdate-edf6a",
+    "storage_bucket": "mobileappdate-edf6a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191349063904:android:508b16fe4226449a9e9085",
+        "android_client_info": {
+          "package_name": "com.ahmad.resfinder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwv5iAAGv1s1mTMRS5EsTvKzFrNRkufGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191349063904:android:6a894c383d31c8d99e9085",
+        "android_client_info": {
+          "package_name": "com.example.restaurant_finder_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwv5iAAGv1s1mTMRS5EsTvKzFrNRkufGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
