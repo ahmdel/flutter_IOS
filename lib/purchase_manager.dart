@@ -220,12 +220,11 @@ class AppAdManager {
   static const bool enableInterstitialAd = true;
   static const bool enableRewardedAd = true;
 
-  // شناسه‌های تست گوگل (برای ریلیز شناسه‌های خود را جایگزین کنید)
+  // شناسه‌های تست گوگل (Android)؛ در initAdUnits برای iOS عوض می‌شوند
   static String _bannerUnitId = 'ca-app-pub-3940256099942544/6300978111';
-  static  String _interstitialUnitId = 'ca-app-pub-3940256099942544/1033173712';// test interstitial
-  static  String _rewardedUnitId = 'ca-app-pub-3940256099942544/5224354917';
-  
-  //eutravel_rewarded ca-app-pub-1909436077319120/4524576660
+  static String _interstitialUnitId = 'ca-app-pub-3940256099942544/1033173712';
+  static String _rewardedUnitId = 'ca-app-pub-3940256099942544/5224354917';
+
   String get bannerUnitId => _bannerUnitId;
 
   InterstitialAd? _interstitialAd;
@@ -235,10 +234,26 @@ class AppAdManager {
   bool _isRewardedLoaded = false;
 
   void initAdUnits() {
-    if (!AppTimelineManager().isTestingMode) { // real mode 
-      _interstitialUnitId = 'ca-app-pub-1909436077319120/4000405438'; // real interstitial 
+    final bool isIos = Platform.isIOS;
+
+    if (AppTimelineManager().isTestingMode) {
+      if (isIos) {
+        _bannerUnitId = 'ca-app-pub-3940256099942544/2934735716';
+        _interstitialUnitId = 'ca-app-pub-3940256099942544/4411468910';
+        _rewardedUnitId = 'ca-app-pub-3940256099942544/1712485313';
+      }
+      return;
+    }
+
+    if (isIos) {
+      // RES iOS
+      _bannerUnitId = 'ca-app-pub-1909436077319120/8843537535';
+      _interstitialUnitId = 'ca-app-pub-1909436077319120/3862673598';
+      _rewardedUnitId = 'ca-app-pub-1909436077319120/8731856899';
+    } else {
+      _bannerUnitId = 'ca-app-pub-1909436077319120/4327708492';
+      _interstitialUnitId = 'ca-app-pub-1909436077319120/4000405438';
       _rewardedUnitId = 'ca-app-pub-1909436077319120/4056245750';
-      _bannerUnitId = 'ca-app-pub-1909436077319120/4327708492'; // واقعی: Tanken_Banner_buttom
     }
   }
 

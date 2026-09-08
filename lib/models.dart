@@ -52,6 +52,13 @@ import 'data/dublin.dart';
 import 'data/basel.dart';
 import 'data/malaga.dart';
 import 'data/bremen.dart';
+import 'data/london.dart';
+import 'data/liverpool.dart';
+import 'data/valencia.dart';
+import 'data/copenhagen.dart';
+import 'data/china.dart';
+import 'data/israel.dart';
+import 'data/malaysia.dart';
 import 'data/restworld.dart'; // اضافه شده برای دسترسی به رستوران‌های جهانی
 
 
@@ -218,6 +225,13 @@ final Map<String, List<Restaurant>> RESTAURANTS_DATA = {
   "Dublin": DUBLIN_RESTAURANTS,
   "Basel": BASEL_AREA_RESTAURANTS,
   "Malaga": malagaRestaurants,
-  "Bremen": bremenRestaurants,  
+  "Bremen": bremenRestaurants,
+  "London": LONDON_RESTAURANTS,
+  "Liverpool": LIVERPOOL_RESTAURANTS,
+  "Valencia": VALENCIA_RESTAURANTS,
+  "Copenhagen": COPENHAGEN_RESTAURANTS,
+  "China": chinaPersianRestaurants,
+  "Israel": additionalPersianRestaurants,
+  "Malaysia": malaysiaPersianRestaurants,
   "اطراف من": [],
 };

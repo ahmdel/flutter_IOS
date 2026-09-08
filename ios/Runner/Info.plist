@@ -61,9 +61,9 @@
     <true/>
     <key>UIApplicationSupportsIndirectInputEvents</key>
     <true/>
-<!-- ۱. شناسه دقیق AdMob شما استخراج شده از فایل مانیفست -->
+<!-- ۱. شناسه AdMob مخصوص iOS -->
     <key>GADApplicationIdentifier</key>
-    <string>ca-app-pub-1909436077319120~5303959800</string>
+    <string>ca-app-pub-1909436077319120~6384895153</string>
 
     <!-- ۲. دسترسی‌های موقعیت مکانی برای پکیج geolocator -->
     <key>NSLocationWhenInUseUsageDescription</key>

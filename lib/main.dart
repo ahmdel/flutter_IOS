@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'models.dart';
+import 'city_catalog.dart';
 import 'dart:async';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -96,89 +97,7 @@ class _MainScreenState extends State<MainScreen>
   String _selectedCountry = "مکان‌یابی من";
   String _selectedCity = "اطراف من";
 
-  // دسته‌بندی شهرها بر اساس کشور
-  final Map<String, List<String>> _countryCityMap = {
-    "مکان‌یابی من": ["اطراف من"],
-    //"Rest World": ["Restworld"],
-    "آلمان": [
-      "برلین",
-      "برمن",
-      "دوسلدورف",
-      "هامبورگ",
-      "کلن",
-      "مونیخ",
-      "فرانکفورت",
-      "هانوفر",
-      "بون",
-      "شهرهای دیگر آلمان",
-    ], // "Hannover"
-    "فرانسه": ["پاریس", "استراسبورگ", "نیس"],
-    "ایتالیا": ["رم", "میلان"],
-    "اسپانیا": ["بارسلونا", "مادرید", "مالاگا"],
-    "ترکیه": ["استانبول", "آنکارا"],
-    "کانادا": ["ونکوور", "تورنتو"],
-    "آمریکا": ["نیویورک", "لوس‌آنجلس"],
-    "استرالیا": ["سیدنی", "ملبورن"],
-    "هلند": ["آمستردام"],
-    "بلژیک": ["بروکسل"],
-    "سوئیس": ["زوریخ"],
-    "اتریش": ["وین"],
-    "پرتغال": ["لیسبون", "پورتو"],
-    "امارات": ["دبی"],
-    "ژاپن": ["توکیو"],
-    "یونان": ["آتن"],
-    "سوئد": ["استکهلم"],
-    "نروژ": ["اسلو"],
-    "فنلاند": ["هلسینکی"],
-    "لهستان": ["ورشو"],
-    "چک": ["پراگ"],  
-  };
-
-  // مپ ترجمه نام‌های فارسی به نام‌های انگلیسی برای جستجو در دیتابیس رستوران‌ها
-  final Map<String, String> _cityTranslationMap = {
-    "اطراف من": "اطراف من",
-    "Restworld": "Restworld",
-    "برلین": "Berlin",
-    "برمن": "Bremen",
-    "دوسلدورف": "Dusseldorf",
-    "هامبورگ": "Hamburg",
-    "هانوفر": "Hannover",
-    "کلن": "Koln",
-    "مونیخ": "Munich",
-    "فرانکفورت": "Frankfurt",
-    "بون": "Bonn",
-    "شهرهای دیگر آلمان": "DE Towns",
-    "پاریس": "Paris",
-    "استراسبورگ": "Strasbourg",
-    "نیس": "Nice",
-    "رم": "Rome",
-    "میلان": "Milan",
-    "بارسلونا": "Barcelona",
-    "مادرید": "Madrid",
-    "مالاگا": "Malaga",
-    "استانبول": "Istanbul",
-    "آنکارا": "Ankara",
-    "ونکوور": "Vancouver",
-    "تورنتو": "Toronto",
-    "نیویورک": "New York",
-    "لوس‌آنجلس": "Los Angeles",
-    "سیدنی": "Sydney",
-    "ملبورن": "Melbourne",
-    "آمستردام": "Amsterdam",
-    "بروکسل": "Brussels",
-    "زوریخ": "Zurich",
-    "وین": "Vienna",
-    "لیسبون": "Lisbon",
-    "پورتو": "Porto",
-    "دبی": "Dubai",
-    "توکیو": "Tokyo",
-    "آتن": "Athens",
-    "استکهلم": "Stockholm",
-    "اسلو": "Oslo",
-    "هلسینکی": "Helsinki",
-    "ورشو": "Warsaw",
-    "پراگ": "Prague",
-  };
+  final Map<String, List<String>> _countryCityMap = buildCountryCityMap();
 
   @override
   void initState() {
@@ -410,7 +329,33 @@ class _MainScreenState extends State<MainScreen>
 
 
 
+  List<String> _visibleCitiesFor(String countryFa) {
+    final cities = _countryCityMap[countryFa] ?? const <String>[];
+    final allRestaurants = RESTAURANTS_DATA.values.expand((list) => list).toList();
+    return cities.where((cityFa) {
+      if (cityFa == kAroundMeCity || cityFa == "شهرهای دیگر آلمان") return true;
+      if (cityFa != kOtherCitiesFa) return true;
+      return filterRestaurantsForSelection(
+        all: allRestaurants,
+        countryFa: countryFa,
+        cityFa: cityFa,
+      ).isNotEmpty;
+    }).toList();
+  }
+
   Widget _buildCountryCitySelectors() {
+    final visibleCities = _visibleCitiesFor(_selectedCountry);
+    final selectedCity = visibleCities.contains(_selectedCity)
+        ? _selectedCity
+        : visibleCities.first;
+    if (selectedCity != _selectedCity) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          setState(() => _selectedCity = selectedCity);
+        }
+      });
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
       child: Row(
@@ -443,8 +388,7 @@ class _MainScreenState extends State<MainScreen>
                     if (newValue != null) {
                       setState(() {
                         _selectedCountry = newValue;
-                        // ⭐️ با تغییر کشور، شهر پیش‌فرض به اولین شهر آن کشور تغییر می‌کند
-                        _selectedCity = _countryCityMap[newValue]!.first;
+                        _selectedCity = _visibleCitiesFor(newValue).first;
                       });
                     }
                   },
@@ -474,7 +418,7 @@ class _MainScreenState extends State<MainScreen>
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  value: _selectedCity,
+                  value: selectedCity,
                   icon: const Icon(
                     Icons.location_city,
                     color: Colors.green,
@@ -494,7 +438,7 @@ class _MainScreenState extends State<MainScreen>
                     }
                   },
                   // ⭐️ لیست شهرها بر اساس کشور انتخاب شده در کمبوباکس اول لود می‌شود
-                  items: _countryCityMap[_selectedCountry]!
+                  items: visibleCities
                       .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -770,12 +714,7 @@ class _MainScreenState extends State<MainScreen>
 
     List<Restaurant> filteredRestaurants;
 
-    // ⭐️ تبدیل نام فارسی شهر به نام انگلیسی برای مطابقت با دیتابیس
-    String internalCityName =
-        _cityTranslationMap[_selectedCity] ?? _selectedCity;
-
-    if (_selectedCity == "اطراف من") {
-      // فیلتر بر اساس فاصله
+    if (_selectedCity == kAroundMeCity) {
       filteredRestaurants = allPossibleRestaurants.where((r) {
         if (currentUserPosition == null) return false;
         double dist = calculateDistance(
@@ -786,17 +725,12 @@ class _MainScreenState extends State<MainScreen>
         );
         return dist <= 50;
       }).toList();
-    } else if (internalCityName == "DE Towns") {
-      // فراخوانی مستقیم رستوران‌های شهرهای دیگر آلمان
-      filteredRestaurants = RESTAURANTS_DATA["DE Towns"] ?? [];
-    } else if (internalCityName == "Restworld") {
-      // فراخوانی مستقیم رستوران‌های جهانی
-      filteredRestaurants = RESTAURANTS_DATA["Restworld"] ?? [];
     } else {
-      // فیلتر دقیق بر اساس نام شهر در دیتابیس
-      filteredRestaurants = allPossibleRestaurants.where((r) {
-        return (r.city.toLowerCase() ?? "") == internalCityName.toLowerCase();
-      }).toList();
+      filteredRestaurants = filterRestaurantsForSelection(
+        all: allPossibleRestaurants,
+        countryFa: _selectedCountry,
+        cityFa: _selectedCity,
+      );
     }
 
     filteredRestaurants = _sortRestaurantsByFavorites(filteredRestaurants);
@@ -1250,7 +1184,7 @@ class _MainScreenState extends State<MainScreen>
 
             const SizedBox(height: 12),
 
-            // دکمه مسیریابی: کاربر بین Apple Maps و Google Maps انتخاب می‌کند
+            // دکمه مسیریابی: iOS = Apple Maps، Android = Google Maps
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -1509,132 +1443,34 @@ class _MainScreenState extends State<MainScreen>
     await _launchExternalUrl(native, https);
   }
 
-  void _showNavigateWithSheet({
+  void _openPlatformMaps({
     required String origin,
     required double destLat,
     required double destLng,
-    required String destinationName,
   }) {
-    void launchWithAds(Future<void> Function() open) {
-      void run() async {
-        await open();
-      }
-
-      // شرط فاز ۳ (روز ۳۰ تا ۶۰ برای کاربر رایگان)
-      if (!PurchaseManager().isPremiumUser.value &&
-          AppTimelineManager().daysUsed >= 30 &&
-          AppTimelineManager().daysUsed < 60) {
-        AppAdManager().showNavigationRewardedAd(() => run());
+    void run() async {
+      if (Platform.isIOS) {
+        await _openAppleMaps(
+          origin: origin,
+          destLat: destLat,
+          destLng: destLng,
+        );
       } else {
-        run();
+        await _openGoogleMaps(
+          origin: origin,
+          destLat: destLat,
+          destLng: destLng,
+        );
       }
     }
 
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (sheetContext) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 10, 16, 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Navigate with',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18 * _fontScale,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'مسیریابی با',
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 14 * _fontScale,
-                  ),
-                ),
-                if (destinationName.trim().isNotEmpty) ...[
-                  const SizedBox(height: 6),
-                  Text(
-                    destinationName,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.grey.shade500,
-                      fontSize: 12 * _fontScale,
-                    ),
-                  ),
-                ],
-                const SizedBox(height: 12),
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.grey.shade200,
-                    child: Icon(
-                      Icons.map_outlined,
-                      color: Colors.grey.shade800,
-                    ),
-                  ),
-                  title: const Text(
-                    'Apple Maps',
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  subtitle: const Text('نقشه اپل'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () {
-                    Navigator.of(sheetContext).pop();
-                    launchWithAds(
-                      () => _openAppleMaps(
-                        origin: origin,
-                        destLat: destLat,
-                        destLng: destLng,
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.green.shade50,
-                    child: Icon(
-                      Icons.public,
-                      color: Colors.green.shade700,
-                    ),
-                  ),
-                  title: const Text(
-                    'Google Maps',
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ),
-                  subtitle: const Text('نقشه گوگل'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () {
-                    Navigator.of(sheetContext).pop();
-                    launchWithAds(
-                      () => _openGoogleMaps(
-                        origin: origin,
-                        destLat: destLat,
-                        destLng: destLng,
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+    if (!PurchaseManager().isPremiumUser.value &&
+        AppTimelineManager().daysUsed >= 30 &&
+        AppTimelineManager().daysUsed < 60) {
+      AppAdManager().showNavigationRewardedAd(() => run());
+    } else {
+      run();
+    }
   }
 
   Future<void> _openDirections(Restaurant restaurant) async {
@@ -1663,20 +1499,18 @@ class _MainScreenState extends State<MainScreen>
 
     final String origin =
         "${currentUserPosition!.latitude},${currentUserPosition!.longitude}";
-    final String destinationName = "${restaurant.name_map}, ${restaurant.city}";
 
-    void openMapChooser() {
-      _showNavigateWithSheet(
+    void openMaps() {
+      _openPlatformMaps(
         origin: origin,
         destLat: restaurant.lat,
         destLng: restaurant.lon,
-        destinationName: destinationName,
       );
     }
 
     // If working hours format is invalid or missing, proceed silently.
     if (wh['valid'] != true) {
-      openMapChooser();
+      openMaps();
       return;
     }
 
@@ -1695,16 +1529,15 @@ class _MainScreenState extends State<MainScreen>
         ),
       );
 
-      // wait briefly then pop and open map chooser
+      // wait briefly then pop and open maps
       await Future.delayed(const Duration(seconds: 2));
       if (mounted) Navigator.of(context).pop();
 
-      openMapChooser();
+      openMaps();
       return;
     }
 
-    // Default: let the user pick Apple Maps or Google Maps
-    openMapChooser();
+    openMaps();
   }
 
   @override
