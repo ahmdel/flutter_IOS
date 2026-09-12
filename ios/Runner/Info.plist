@@ -63,8 +63,8 @@
     <true/>
 <!-- ۱. شناسه AdMob مخصوص iOS -->
     <key>GADApplicationIdentifier</key>
-    <string>ca-app-pub-1909436077319120~6384895153</string>
-
+    
+    <string>ca-app-pub-1909436077319120~7670056666</string>
     <!-- ۲. دسترسی‌های موقعیت مکانی برای پکیج geolocator -->
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>این اپلیکیشن برای پیدا کردن و نمایش رستوران‌های اطراف، به موقعیت مکانی شما نیاز دارد.</string>

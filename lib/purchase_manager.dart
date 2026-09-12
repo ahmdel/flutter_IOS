@@ -247,9 +247,9 @@ class AppAdManager {
 
     if (isIos) {
       // RES iOS
-      _bannerUnitId = 'ca-app-pub-1909436077319120/8843537535';
-      _interstitialUnitId = 'ca-app-pub-1909436077319120/3862673598';
-      _rewardedUnitId = 'ca-app-pub-1909436077319120/8731856899';
+      _bannerUnitId = 'ca-app-pub-1909436077319120/5451087430';
+      _interstitialUnitId = 'ca-app-pub-1909436077319120/8707806167';
+      _rewardedUnitId = 'ca-app-pub-1909436077319120/3539239961';
     } else {
       _bannerUnitId = 'ca-app-pub-1909436077319120/4327708492';
       _interstitialUnitId = 'ca-app-pub-1909436077319120/4000405438';
