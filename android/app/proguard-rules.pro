@@ -1,0 +1,3 @@
+-keep class com.stripe.android.** { *; }
+-keep class com.facebook.react.bridge.** { *; }
+-dontwarn com.stripe.android.**

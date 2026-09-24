@@ -1,0 +1,22 @@
+import '../models.dart';
+
+// @formatter:off
+final List<Restaurant> DALLAS_RESTAURANTS = [
+  Restaurant(name: "آرش پرشین گریل", name_map: "Arash Persian Grill", lat: 33.00285086899871, lon: -96.72294017601119, description: "غذاهای فوق‌العاده با طعم‌های غنی ایرانی و محیطی صمیمی", parkingInfo: "پارکینگ اختصاصی", city: "Dallas", price: "\$20–30", rating: "4.7 (987)", workingHours: "10 pm"),
+  Restaurant(name: "لیتل پرشیا", name_map: "Little Persia Mediterranean", lat: 33.0840128121787, lon: -96.71342034927521, description: "کباب‌های اصیل ایرانی با قیمت بسیار مناسب", parkingInfo: "پارکینگ مجتمع", city: "Dallas", price: "\$20–30", rating: "4.8 (266)", workingHours: "9 pm"),
+  Restaurant(name: "کافه صمد", name_map: "Samad Cafe", lat: 32.827123761661824, lon: -96.83959642946894, description: "بهترین غذاهای خانگی ایرانی در محیطی ساده و صمیمی", parkingInfo: "پارکینگ خیابانی", city: "Dallas", price: "\$10–20", rating: "4.9 (1,662)", workingHours: "11:30 am"),
+  Restaurant(name: "مستر کباب", name_map: "Master Kabob", lat: 32.63913172856854, lon: -97.0756858000212, description: "مدیریت سخاوتمند و بهترین کباب‌های منطقه", parkingInfo: "پارکینگ اختصاصی", city: "Dallas", price: "\$10–20", rating: "4.9 (1,004)", workingHours: "10 pm"),
+  Restaurant(name: "رستوران کسری", name_map: "Kasra Restaurant", lat: 32.961399027130845, lon: -96.73694842333444, description: "انتخابی عالی برای کباب‌های کلاسیک ایرانی و طعم‌های اصیل", parkingInfo: "پارکینگ در محل", city: "Dallas", price: "\$20–30", rating: "4.3 (1,297)", workingHours: "10 pm"),
+  Restaurant(name: "آتش", name_map: "ATASH Mediterranean & Italian", lat: 33.00185307304898, lon: -96.79510641781235, description: "ترکیب عالی غذای اصیل ایرانی و محیطی آرام", parkingInfo: "پارکینگ عمومی", city: "Dallas", price: "\$20–30", rating: "4.6 (147)", workingHours: "11 pm"),
+  Restaurant(name: "شیراز گریل", name_map: "Shiraz Mediterranean Grill", lat: 32.99919009804191, lon: -96.7986075411256, description: "رستوران با سابقه ایرانی دارای فضای باز و کباب‌های عالی", parkingInfo: "پارکینگ اختصاصی", city: "Dallas", price: "\$30–50", rating: "4.1 (1,274)", workingHours: "9 pm"),
+  Restaurant(name: "آریا گریل", name_map: "Aria Mediterranean Grill", lat: 33.09304177956517, lon: -96.84042755891679, description: "برنج‌های معطر و دیس‌های سنتی به سبک ایرانی", parkingInfo: "پارکینگ اختصاصی", city: "Dallas", price: "\$20–30", rating: "4.6 (527)", workingHours: "9 pm"),
+  Restaurant(name: "صحرا", name_map: "Sahara Mediterranean Restaurant", lat: 32.933166341971166, lon: -96.81391948223, description: "با کیفیت‌ترین غذای ایرانی در منطقه دالاس", parkingInfo: "پارکینگ مجتمع", city: "Dallas", price: "\$10–20", rating: "4.2 (831)", workingHours: "7 pm"),
+  Restaurant(name: "کباب هاوس", name_map: "Kabob House", lat: 32.69870049998577, lon: -97.1238153116778, description: "غذای ایرانی درجه یک و سرویس‌دهی بسیار حرفه‌ای", parkingInfo: "پارکینگ خیابانی", city: "Dallas", price: "\$10–20", rating: "4.5 (1,113)", workingHours: "9:30 pm"),
+  Restaurant(name: "آریانا", name_map: "Ariana Afgan Cuisine", lat: 32.83121994202511, lon: -96.77029810002118, description: "کباب کوبیده لذیذ و محیطی بسیار تمیز", parkingInfo: "پارکینگ خیابانی", city: "Dallas", price: "\$10–20", rating: "4.7 (481)", workingHours: "2 am"),
+  Restaurant(name: "رز (مدیترانه‌ای)", name_map: "Rose Mediterranean Cuisine", lat: 33.08661168911591, lon: -96.77123877670793, description: "از بهترین و اصیل‌ترین غذاهای ایرانی در ایالت تگزاس", parkingInfo: "پارکینگ عمومی", city: "Dallas", price: "\$20–30", rating: "4.4 (1,041)", workingHours: "9 pm"),
+  Restaurant(name: "شهرزاد", name_map: "Shahrzad Mediterranean", lat: 32.960783552446046, lon: -96.76775589388662, description: "مارکت و رستوران ایرانی با کباب‌های آبدار و برنج معطر", parkingInfo: "پارکینگ اختصاصی", city: "Dallas", price: "\$10–20", rating: "3.9 (1,162)", workingHours: "9 pm"),
+  Restaurant(name: "اکسپرس کباب", name_map: "Express Kabob PLATE", lat: 33.0277289951303, lon: -96.71169265891677, description: "کباب‌های کاملاً پخته شده با طعم‌های شگفت‌انگیز", parkingInfo: "پارکینگ مجتمع", city: "Dallas", price: "\$10–20", rating: "4.6 (1,815)", workingHours: "10 pm"),
+  Restaurant(name: "فیوژن گریل", name_map: "Fusion Mediterranean Grill", lat: 32.92432515708665, lon: -96.8046353705734, description: "کباب‌های نرم و لذیذ در کنار سیب‌زمینی‌های تنوری", parkingInfo: "پارکینگ در محل", city: "Dallas", price: "\$20–30", rating: "4.7 (842)", workingHours: "12 am"),
+];
+
+// @formatter:on

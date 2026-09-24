@@ -1,0 +1,36 @@
+import '../models.dart';
+
+// @formatter:off
+final List<Restaurant> FRANKFURT_RESTAURANTS = [  
+  Restaurant(name: "رستوران کیش", name_map: "Kish Restaurant", lat: 50.12108906718547, lon: 8.649253632548922, description: "رستوران پرسیان کلاسیک با منوی متنوع", parkingInfo: "پارکینگ عمومی اطراف Leipziger Str", city: "Frankfurt"),
+  Restaurant(name: "رستوران پرشیا", name_map: "Persia Restaurant", lat: 50.10223470799189, lon: 8.663183720351682, description: "رستوران ایرانی با کباب‌ها و خورش‌های سنتی", parkingInfo: "پارکینگ عمومی اطراف Gutleutviertel", city: "Frankfurt"),
+  Restaurant(name: "رستوران شاندیز", name_map: "Schandis Persian Specialities", lat: 50.12930450428421, lon: 8.691458590162966, description: "رستوران پرسیان با غذاهای سنتی و حلال", parkingInfo: "پارکینگ خیابانی Nordendstraße", city: "Frankfurt"),
+  Restaurant(name: "رستوران زرتشت", name_map: "Zarathustra Restaurant", lat: 50.120413664053096, lon: 8.686098315752925, description: "رستوران پرسیان با غذاهای سنتی اصیل", parkingInfo: "پارکینگ عمومی اطراف Innenstadt", city: "Frankfurt"),
+  Restaurant(name: "رستوران هانی", name_map: "Hani Restaurant", lat: 50.10302066020427, lon: 8.662610371516982, description: "رستوران ایرانی با غذاهای خوش‌طعم", parkingInfo: "پارکینگ عمومی اطراف Gutleutstraße", city: "Frankfurt"),
+  Restaurant(name: "رستوران دایانا", name_map: "Dayana Persisches Restaurant", lat: 50.099644681057626, lon: 8.550599939642634, description: "رستوران پرسیان با فضای دوستانه در منطقه هوخست", parkingInfo: "پارکینگ عمومی اطراف Höchst", city: "Frankfurt"),
+  Restaurant(name: "رستوران شمال", name_map: "SHOMAL Persisches Restaurant", lat: 50.12336189992881, lon: 8.701467647109638, description: "رستوران پرسیان با منوی کامل و عالی", parkingInfo: "پارکینگ خیابانی Höhenstraße", city: "Frankfurt"),
+  Restaurant(name: "رستوران پسته", name_map: "Pistazie Persian & Vegetarian", lat: 50.118230515496045, lon: 8.695186165409847, description: "رستوران ایرانی با گزینه‌های متنوع گیاهی", parkingInfo: "پارکینگ عمومی اطراف Westend", city: "Frankfurt"),
+  Restaurant(name: "رستوران بابام", name_map: "Babam Persian Restaurant", lat: 50.108039776619336, lon: 8.671216281836237, description: "رستوران پرسیان محبوب در مرکز شهر", parkingInfo: "پارکینگ عمومی اطراف Münchener Str.", city: "Frankfurt"),
+  Restaurant(name: "رستوران منوتو", name_map: "Manoto Persian Restaurant", lat: 50.11462949338438, lon: 8.758362079157578, description: "رستوران ایرانی با منوی متنوع پرسیان", parkingInfo: "پارکینگ خیابانی Dieburger Str.", city: "Frankfurt"),
+  Restaurant(name: "رستوران یاام", name_map: "YAAM Persian Restaurant", lat: 50.10360699092262, lon: 8.648520129032699, description: "رستوران پرسیان با فضای مدرن و کژوال", parkingInfo: "پارکینگ عمومی Mainzer Landstraße", city: "Frankfurt"),
+  Restaurant(name: "رستوران رَندِوو", name_map: "Rendezvous Persian Restaurant", lat: 50.1042746350102, lon: 8.664426829107596, description: "رستوران ایرانی با دسترسی عالی", parkingInfo: "پارکینگ عمومی Baseler Straße", city: "Frankfurt"),
+  Restaurant(name: "رستوران مهناز", name_map: "Mahnaz Persische Spezialitäten", lat: 50.10923189735503, lon: 8.65264961496155, description: "رستوران ایرانی با غذاهای کلاسیک و خانگی", parkingInfo: "پارکینگ عمومی Europa-Allee", city: "Frankfurt"),
+  Restaurant(name: "رستوران مولانا", name_map: "Molana", lat: 50.10465961875514, lon: 8.664359451801777, description: "رستوران پرسیان سنتی مولانا", parkingInfo: "پارکینگ عمومی اطراف مرکز شهر", city: "Frankfurt"),
+  Restaurant(name: "رستوران خانه مهاجران", name_map: "To The Settler's House", lat: 50.057048085502544, lon: 8.53072955046176, description: "رستوران بین‌المللی با فضای خاص", parkingInfo: "پارکینگ خیابانی", city: "Frankfurt"),
+  Restaurant(name: "رستوران افغان رومی", name_map: "Rumi's Afghan Restaurant", lat: 50.104968108484485, lon: 8.641931591054536, description: "رستوران افغان با طعم‌های اصیل", parkingInfo: "پارکینگ عمومی در نزدیکی", city: "Frankfurt"),
+  Restaurant(name: "رستوران زعفران کوشه", name_map: "Safran Küche", lat: 50.13352786014174, lon: 8.568522648443873, description: "آشپزخانه خاورمیانه‌ای و ایرانی", parkingInfo: "پارکینگ عمومی", city: "Frankfurt"),
+  Restaurant(name: "رستوران نایب", name_map: "Nayeb Restaurant", lat: 50.13410475670906, lon: 8.455847383388127, description: "رستوران به سبک ایرانی", parkingInfo: "پارکینگ خیابانی", city: "Frankfurt"),
+  Restaurant(name: "رستوران مامان", name_map: "MAMAN", lat: 50.10663096283183, lon: 8.761167203019982, description: "رستوران بین‌المللی با دستپخت خانگی", parkingInfo: "پارکینگ خیابانی", city: "Frankfurt"),
+  Restaurant(name: "رستوران افغانی بابا درباری", name_map: "Baba Darbari", lat: 50.10692086775701, lon: 8.666657376993046, description: "غذاهای سنتی و لذیذ افغانی", parkingInfo: "پارکینگ عمومی", city: "Frankfurt"),
+  Restaurant(name: "رستوران سوفی", name_map: "Sufi", lat: 50.078504519570195, lon: 8.233690212198914, description: "رستوران و کافه با منوی متنوع", parkingInfo: "پارکینگ عمومی", city: "Frankfurt"),
+  Restaurant(name: "رستوران کباب‌سرا", name_map: "Kababsara", lat: 49.98460895157328, lon: 8.180154948275618, description: "تخصص در انواع کباب‌های ایرانی", parkingInfo: "پارکینگ خیابانی", city: "Frankfurt"),
+  Restaurant(name: "فست‌فود ایرانی کامی فود", name_map: "KAMI FOOD", lat: 49.97750568548768, lon: 8.429479608421067, description: "فست‌فود به سبک ایرانی", parkingInfo: "پارکینگ خیابانی", city: "Frankfurt"),
+  Restaurant(name: "اغذیه‌فروشی خان بابا", name_map: "Khan Baba", lat: 50.33703019227454, lon: 8.753248691186919, description: "اغذیه‌فروشی سریع با طعم ایرانی", parkingInfo: "پارکینگ خیابانی", city: "Frankfurt"),
+  Restaurant(name: "اغذیه‌فروشی فرای شنوزه", name_map: "Frei Schnauze", lat: 50.1044079465017, lon: 8.664415595047984, description: "فست‌فود آلمانی و بین‌المللی", parkingInfo: "پارکینگ خیابانی", city: "Frankfurt"),
+  Restaurant(name: "سوئه لیمونه اوفنباخ", name_map: "Süße Limone Offenbach", lat: 50.10782933635328, lon: 8.761528570537374, description: "رستوران با غذاهای ایتالیایی و مدیترانه‌ای", parkingInfo: "پارکینگ خیابانی", city: "Frankfurt"),
+  Restaurant(name: "بانو | قلیان، ساندویچ و بار", name_map: "Banoo", lat: 50.11651692460114, lon: 8.685109988328499, description: "ترکیب قلیان‌سرا و ساندویچ‌های ایرانی", parkingInfo: "پارکینگ عمومی", city: "Frankfurt"),
+  Restaurant(name: "رستوران افغان آریانا", name_map: "Ariana Afghan Restaurant", lat: 50.10717291625303, lon: 8.666515270537376, description: "رستوران افغان آریانا با محیط دنج", parkingInfo: "پارکینگ عمومی", city: "Frankfurt"),
+  Restaurant(name: "رستوران آرکه نووا", name_map: "Arche Nova", lat: 50.120770164547075, lon: 8.63788934892755, description: "رستوران با منوی بین‌المللی", parkingInfo: "پارکینگ عمومی", city: "Frankfurt"),
+  Restaurant(name: "گریل شرقی بابيروس", name_map: "Babiros Orient Grill", lat: 50.1219942835964, lon: 8.647055288328493, description: "کباب و گریل به سبک خاورمیانه‌ای", parkingInfo: "پارکینگ خیابانی", city: "Frankfurt"),
+];
+// @formatter:on
