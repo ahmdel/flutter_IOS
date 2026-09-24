@@ -1,0 +1,72 @@
+name: Build and Upload iOS App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+      # ۱. دریافت کدها از GitHub
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ۲. نصب جاوا
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      # ۳. نصب فلاتر
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: x64
+
+      # غیرفعال‌سازی Swift Package Manager برای حل تداخل پکیج‌ها با CocoaPods
+      - name: Disable Swift Package Manager
+        run: flutter config --no-enable-swift-package-manager
+
+      # ۴. دریافت پکیج‌های فلاتر
+      - name: Install dependencies
+        run: flutter pub get
+
+      # ۵. نصب Certificate در Keychain
+      - name: Install Certificate
+        uses: apple-actions/import-codesign-certs@v3
+        with:
+          p12-file-base64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          p12-password: ${{ secrets.P12_PASSWORD }}
+
+      # ۶. نصب Provisioning Profile
+      - name: Install Provisioning Profile
+        uses: apple-actions/download-provisioning-profiles@v3
+        with:
+          bundle-id: 'com.smartsoftware.persianrestaurantfinder'
+          profile-type: 'IOS_APP_STORE'
+          issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          api-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          api-private-key: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY_BASE64 }}
+
+      # ۷. ساخت و امضای فایل IPA
+      - name: Build and Sign IPA
+        run: |
+          flutter build ipa --release --no-codesign
+          xcodebuild -exportArchive \
+            -archivePath build/ios/archive/Runner.xcarchive \
+            -exportPath build/ios/ipa \
+            -exportOptionsPlist ios/Runner/ExportOptions.plist
+
+      # ۸. آپلود نسخه به TestFlight / App Store Connect
+      - name: Upload App to TestFlight
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: 'build/ios/ipa/*.ipa'
+          issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          api-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          api-private-key: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY_BASE64 }}
