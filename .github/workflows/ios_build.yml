@@ -62,11 +62,27 @@ jobs:
             -exportPath build/ios/ipa \
             -exportOptionsPlist ios/Runner/ExportOptions.plist
 
+      # ۷.۵ پیدا کردن فایل IPA واقعی و تغییر نام به مسیر ثابت
+      # apple-actions/upload-testflight-build مسیر ورودی رو خودش glob نمی‌کنه،
+      # پس با الگوی * (مثلاً build/ios/ipa/*.ipa) دقیقاً همون رشته رو به altool
+      # می‌ده و altool می‌گه فایل پیدا نشد. اینجا با bash واقعی glob می‌کنیم و
+      # فایل رو به یک اسم ثابت می‌بریم تا مرحله‌ی بعد مسیر دقیق داشته باشد.
+      - name: Locate exported IPA
+        run: |
+          ipa_path=$(find build/ios/ipa -maxdepth 1 -name '*.ipa' | head -n 1)
+          if [ -z "$ipa_path" ]; then
+            echo "::error::No .ipa file found in build/ios/ipa"
+            ls -la build/ios/ipa || true
+            exit 1
+          fi
+          echo "Found IPA: $ipa_path"
+          mv "$ipa_path" build/ios/ipa/app.ipa
+
       # ۸. آپلود نسخه به TestFlight / App Store Connect
       - name: Upload App to TestFlight
         uses: apple-actions/upload-testflight-build@v1
         with:
-          app-path: 'build/ios/ipa/*.ipa'
+          app-path: 'build/ios/ipa/app.ipa'
           issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           api-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           api-private-key: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY_BASE64 }}
