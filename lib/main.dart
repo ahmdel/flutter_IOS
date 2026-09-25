@@ -741,6 +741,26 @@ class _MainScreenState extends State<MainScreen>
     );
   }
 
+  // بازکردن لینک‌های الزامی اشتراک (Privacy Policy / Terms of Use) طبق قانون اپل ۳.۱.۲(c)
+  Future<void> _openLegalUrl(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+    try {
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('امکان باز کردن این لینک وجود ندارد.')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('خطا: ${e.toString()}')));
+      }
+    }
+  }
+
   Widget _buildPaymentPrompt() {
     bool isProcessing = PurchaseManager().isProcessing.value;
     return Card(
@@ -761,9 +781,14 @@ class _MainScreenState extends State<MainScreen>
               style: TextStyle(fontSize: 18* _fontScale, fontWeight: FontWeight.bold),
             ),
              Text(
-              'با پرداخت ۵ یورو، تمامی رستوران‌های اطراف را بدون محدودیت ببینید.',
+              // طبق ایراد اپل (Guideline 3.1.2(c)): عنوان، مدت و قیمت دقیق اشتراک
+              // باید همین‌جا، قبل از دکمه‌ی خرید، در خودِ اپ نمایش داده بشه.
+              // این تغییر فقط برای iOS است؛ اندروید (که اشتراک نداره، خرید یک‌باره‌ست) دست‌نخورده می‌مونه.
+              Platform.isIOS
+                  ? 'اشتراک ۶ماهه پرمیوم - ۶.۹۹ یورو برای هر ۶ ماه'
+                  : 'با پرداخت ۵ یورو، تمامی رستوران‌های اطراف را بدون محدودیت ببینید.',
               textAlign: TextAlign.center, style: TextStyle(
-    color: Colors.white, 
+    color: Platform.isIOS ? Colors.black87 : Colors.white,
     fontSize: 12 * _fontScale,
   ),
             ),
@@ -805,6 +830,39 @@ class _MainScreenState extends State<MainScreen>
                       ),
               ),
             ),
+
+            // الزام اپل (Guideline 3.1.2(c)): لینک‌های قابل‌کلیک Privacy Policy و
+            // Terms of Use باید دقیقاً همین‌جا، کنار دکمه‌ی خرید و داخل خود اپ باشن،
+            // نه فقط در صفحه‌ی اپ‌استور. فقط برای iOS نمایش داده می‌شه.
+            if (Platform.isIOS) ...[
+              const SizedBox(height: 4),
+              TextButton(
+                onPressed: () => _openLegalUrl(
+                  'https://sites.google.com/view/ahmaddelforouzi/privacy-policy',
+                ),
+                child: Text(
+                  'سیاست حریم خصوصی (Privacy Policy)',
+                  style: TextStyle(
+                    color: const Color(0xff004d99),
+                    decoration: TextDecoration.underline,
+                    fontSize: 12 * _fontScale,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () => _openLegalUrl(
+                  'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/',
+                ),
+                child: Text(
+                  'شرایط استفاده (Terms of Use)',
+                  style: TextStyle(
+                    color: const Color(0xff004d99),
+                    decoration: TextDecoration.underline,
+                    fontSize: 12 * _fontScale,
+                  ),
+                ),
+              ),
+            ],
 
             TextButton(
               onPressed: isProcessing
