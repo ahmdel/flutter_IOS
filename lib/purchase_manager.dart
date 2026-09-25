@@ -51,6 +51,23 @@ class PurchaseManager {
   /// بستن استریم جهت جلوگیری از لک حافظه (Memory Leak)
   void dispose() {
     _purchaseSubscription?.cancel();
+    _purchaseTimeoutTimer?.cancel();
+  }
+
+  // تایمر ایمنی: روی iOS اگر کاربر شیت خرید را با کشیدن به بیرون (نه دکمه‌ی
+  // Cancel رسمی) ببندد، گاهی هیچ eventی در purchaseStream نمی‌آید و
+  // isProcessing برای همیشه true می‌ماند — که چون یک اورلی مسدودکننده‌ی
+  // تمام‌صفحه را کنترل می‌کند، کل اپ را برای کاربر قفل می‌کند. این تایمر
+  // بعد از مدتی خودش isProcessing را ریست می‌کند تا اپ هیچ‌وقت گیر نکند.
+  Timer? _purchaseTimeoutTimer;
+  void _armPurchaseTimeoutGuard() {
+    _purchaseTimeoutTimer?.cancel();
+    _purchaseTimeoutTimer = Timer(const Duration(seconds: 45), () {
+      if (isProcessing.value) {
+        isProcessing.value = false;
+        _handleError("پرداخت تکمیل نشد. لطفاً دوباره تلاش کنید.");
+      }
+    });
   }
 
   // گوش دادن به تغییرات درگاه پرداخت گوگل پلی
@@ -75,20 +92,23 @@ class PurchaseManager {
         isProcessing.value = true;
       } else {
         if (purchaseDetails.status == PurchaseStatus.purchased || purchaseDetails.status == PurchaseStatus.restored) {
-          
+
           // ۱. اول ثبت وضعیت فعال‌سازی در فایربیس (بسیار حیاتی)
           await _grantPremiumAccess(purchaseDetails);
-          
+
           // ۲. بعد اعلام اتمام تراکنش به گوگل پلی برای جلوگیری از ریفاند خودکار
           // if (purchaseDetails.pendingCompletePurchase) {
           //   await _inAppPurchase.completePurchase(purchaseDetails);
           // }
+          _purchaseTimeoutTimer?.cancel();
           isProcessing.value = false;
-          
+
         } else if (purchaseDetails.status == PurchaseStatus.error) {
+          _purchaseTimeoutTimer?.cancel();
           isProcessing.value = false;
           _handleError(purchaseDetails.error?.message ?? "تراکنش ناموفق بود.");
         } else if (purchaseDetails.status == PurchaseStatus.canceled) {
+          _purchaseTimeoutTimer?.cancel();
           isProcessing.value = false;
           _handleError("پرداخت توسط شما لغو شد.");
         }
@@ -199,12 +219,14 @@ class PurchaseManager {
 
     final PurchaseParam purchaseParam = PurchaseParam(productDetails: response.productDetails.first);
     await _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+    _armPurchaseTimeoutGuard();
   }
 
   /// بازیابی خریدهای قبلی کاربر
   Future<void> restorePurchases() async {
     isProcessing.value = true;
     await _inAppPurchase.restorePurchases();
+    _armPurchaseTimeoutGuard();
   }
 
   // گرفتن شناسه سخت‌افزاری منحصر به فرد دستگاه
